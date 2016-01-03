@@ -1,0 +1,66 @@
+[
+  {
+    "id": "1",
+    "category": "Career Fair"
+  },
+  {
+    "id": "2",
+    "category": "Conference"
+  },
+  {
+    "id": "3",
+    "category": "Course"
+  },
+  {
+    "id": "4",
+    "category": "Exhibition"
+  },
+  {
+    "id": "7",
+    "category": "Seminar"
+  },
+  {
+    "id": "8",
+    "category": "Symposium"
+  },
+  {
+    "id": "9",
+    "category": "Workshop"
+  },
+  {
+    "id": "10",
+    "category": "Lecture"
+  },
+  {
+    "id": "11",
+    "category": "Product Launch"
+  },
+  {
+    "id": "12",
+    "category": "Trade Show"
+  },
+  {
+    "id": "13",
+    "category": "Training"
+  },
+  {
+    "id": "14",
+    "category": "Forum"
+  },
+  {
+    "id": "15",
+    "category": "Others"
+  },
+  {
+    "id": "17",
+    "category": "Meeting"
+  },
+  {
+    "id": "18",
+    "category": "Congress"
+  },
+  {
+    "id": "19",
+    "category": "University Event"
+  }
+]
