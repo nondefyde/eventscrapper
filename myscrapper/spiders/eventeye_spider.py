@@ -49,6 +49,7 @@ class EventEyeSpider(scrapy.Spider):
         item['source'] = sel.css('table td.mt a[rel="nofollow"]::attr(href)').extract()[0].strip()
         item['title'] = sel.css('table table h1 b::text').extract()[0]
         item['description'] = ''
+        item['addressRegion'] = ''
         item['addressLocality'] = sel.css('table a font.etb::text').extract()[0]
         item['location'] = sel.css('table table h1 b::text').extract()[0]
         item['date'] = sel.css('table td.mt:first-child span::text').extract()[0].strip()

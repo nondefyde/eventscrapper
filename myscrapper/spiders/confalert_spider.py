@@ -46,6 +46,7 @@ class ConferenceAlertsSpider(scrapy.Spider):
             item['location'] = location[num]
             item['addressCountry'] = country[num]
             item['addressLocality'] =  location[num] + '' + country[num]
+            item['addressRegion'] = ''
 
             request = scrapy.Request(item['source'], callback=self.parse_event,
                                      meta={'item': item})
