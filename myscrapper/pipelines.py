@@ -58,8 +58,8 @@ class SQLandJsonStoragePipeline(object):
                 "state_code, city, event_website, zip, event_start, event_end, latitude, longitude, location)"
                 "values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
                 (item['title'], item['description'], item['source'], item['category_id'],
-                 item['streetAddress'], item['price_range'],item['country_code'], item['state_code'],
-                 item['addressLocality'], item['event_website'], item['postalCode'],item['event_start'],
+                 item['streetAddress'], item['price_range'], item['country_code'], item['state_code'],
+                 item['addressLocality'], item['event_website'], item['postalCode'], item['event_start'],
                  item['event_end'], item['latitude'], item['longitude'], item['location'])
             )
             logging.log(logging.INFO, "Item stored in db: %s" % item)
