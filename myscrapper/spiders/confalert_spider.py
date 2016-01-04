@@ -18,6 +18,7 @@ class ConferenceAlertsSpider(scrapy.Spider):
         self.urls = self.get_dict('assets\conf_start_urls.json')
         for url in self.urls:
             self.start_urls = self.start_urls + [url['url']]
+            break
 
         self.google_maps = GoogleMaps(api_key='AIzaSyCaxLzZ2r7AbCJiIy5RtJ4jOQXcOlDbeV0')
         # location = self.google_maps.search(location='Bali, Indonesia')
@@ -47,6 +48,7 @@ class ConferenceAlertsSpider(scrapy.Spider):
             item['addressCountry'] = country[num]
             item['addressLocality'] =  location[num] + '' + country[num]
             item['addressRegion'] = ''
+            item['price_range'] = ''
 
             request = scrapy.Request(item['source'], callback=self.parse_event,
                                      meta={'item': item})

@@ -14,7 +14,7 @@ class SQLandJsonStoragePipeline(object):
         self.dbpool = adbapi.ConnectionPool('MySQLdb', db='eventbrite',
                                             user='root', passwd='', cursorclass=MySQLdb.cursors.DictCursor,
                                             charset='utf8', use_unicode=True)
-        # self.file = open('items.json', 'wb')
+        self.file = open('items.json', 'wb')
 
         self.categories = self.get_dict('data\categories.json')
         self.industries = self.get_dict('data\industries.json')
@@ -26,7 +26,7 @@ class SQLandJsonStoragePipeline(object):
         query = self.dbpool.runInteraction(self._conditional_insert, item)
         query.addErrback(self.handle_error)
 
-        # self._print_to_json_file(item)
+        self._print_to_json_file(item)
 
         return item
 

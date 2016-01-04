@@ -50,6 +50,7 @@ class EventEyeSpider(scrapy.Spider):
         item['title'] = sel.css('table table h1 b::text').extract()[0]
         item['description'] = ''
         item['addressRegion'] = ''
+        item['price_range'] = ''
         item['addressLocality'] = sel.css('table a font.etb::text').extract()[0]
         item['location'] = sel.css('table table h1 b::text').extract()[0]
         item['date'] = sel.css('table td.mt:first-child span::text').extract()[0].strip()
@@ -61,6 +62,7 @@ class EventEyeSpider(scrapy.Spider):
         item['category'] = 'Cant Figure this out'
         item['industry'] = 'Cant Figure this out'
 
+
         self.get_datetime(item)
 
         loc = self.google_maps.search(location=item['addressLocality'])
@@ -68,6 +70,7 @@ class EventEyeSpider(scrapy.Spider):
         try:
             item['postalCode'] = my_location.postal_code
             item['country_code'] = my_location.country_shortcut
+            item['addressCountry'] = my_location.country_shortcut
             item['city'] = my_location.city
             item['longitude'] = my_location.lng
             item['latitude'] = my_location.lat
@@ -93,6 +96,8 @@ class EventEyeSpider(scrapy.Spider):
                       'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}
 
     def get_datetime(self, item):
+        item['event_start'] = '0000-00-00 00:00:0'
+        item['event_end'] = '0000-00-00 00:00:0'
         date = item['date']
         try:
             check = date.split('.')
