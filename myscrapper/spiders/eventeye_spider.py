@@ -22,7 +22,7 @@ class EventEyeSpider(scrapy.Spider):
     def __init__(self, **kwargs):
         super(EventEyeSpider, self).__init__(**kwargs)
         self.init_Month()
-        # self.url_per_month()
+        self.url_per_month()
         self.google_maps = GoogleMaps(api_key='AIzaSyCaxLzZ2r7AbCJiIy5RtJ4jOQXcOlDbeV0')
 
     def parse(self, response):
@@ -54,11 +54,12 @@ class EventEyeSpider(scrapy.Spider):
     def parse_event(self, response):
         sel = response.css('html')
         item = response.meta['item']
-        item['event_website'] = 'http://www.eventseye.com/'
-        item['source'] = sel.css('table td.mt a[rel="nofollow"]::attr(href)').extract()[0].strip()
+        item['source'] = response.request.url
+        item['event_website'] = sel.css('table td.mt a[rel="nofollow"]::attr(href)').extract()[0].strip()
         item['title'] = sel.css('table table h1 b::text').extract()[0]
         item['description'] = ''
         item['addressRegion'] = ''
+        item['postalCode'] = ''
         item['price_range'] = ''
         item['addressLocality'] = sel.css('table a font.etb::text').extract()[0]
         item['location'] = sel.css('table table h1 b::text').extract()[0]
@@ -72,8 +73,8 @@ class EventEyeSpider(scrapy.Spider):
 
         loc = self.google_maps.search(location=item['addressLocality'])
         my_location = loc.first()
+
         try:
-            item['postalCode'] = my_location.postal_code
             item['country_code'] = my_location.country_shortcut
             item['addressCountry'] = my_location.country_shortcut
             item['city'] = my_location.city
@@ -81,7 +82,6 @@ class EventEyeSpider(scrapy.Spider):
             item['latitude'] = my_location.lat
             item['streetAddress'] = my_location.formatted_address
         except Exception as e:
-            item['postalCode'] = ''
             item['country_code'] = ''
             item['city'] = ''
             item['longitude'] = ''
