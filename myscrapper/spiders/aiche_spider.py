@@ -39,7 +39,11 @@ class EventEyeSpider(scrapy.Spider):
         item['source'] = response.request.url
         item['event_website'] = ''
         # item['title'] = content.css('div.conference-lead-info h1.title::text').extract()
-        item['description'] = content.css('div.field-name-body div.field-item p:first-child::text').extract()
+        try:
+            item['description'] = content.css('div.field-name-body div.field-item p:first-child::text').extract()[0].strip()
+        except Exception as e:
+            item['description'] = ''
+        pass
         item['addressRegion'] = ''
         item['postalCode'] = ''
         item['price_range'] = ''
