@@ -20,11 +20,14 @@ class EventEyeSpider(scrapy.Spider):
         self.google_maps = GoogleMaps(api_key='AIzaSyCaxLzZ2r7AbCJiIy5RtJ4jOQXcOlDbeV0')
 
     def parse(self, response):
+        titles = response.css('div.view-content div.views-row article h3 a::text').extract()
         urls = response.css('div.view-content div.views-row article h3 a::attr(href)').extract()
-        for url in urls:
+        for num in range(len(urls)):
+            url = urls[num]
             item = EventItem()
             complete_url = url
             item['url'] = 'http://www.aiche.org' + complete_url
+            item['title'] = titles[num]
             request = scrapy.Request(item['url'], callback=self.parse_event, meta={'item': item})
             yield request
             # break
@@ -35,8 +38,8 @@ class EventEyeSpider(scrapy.Spider):
         item = response.meta['item']
         item['source'] = response.request.url
         item['event_website'] = ''
-        item['title'] = content.css('div.conference-lead-info h1.title::text').extract()
-        item['description'] = content.css('div.field-name-body div.field-item p:first-child::text').extract()[0].strip()
+        # item['title'] = content.css('div.conference-lead-info h1.title::text').extract()
+        item['description'] = content.css('div.field-name-body div.field-item p:first-child::text').extract()
         item['addressRegion'] = ''
         item['postalCode'] = ''
         item['price_range'] = ''
@@ -87,7 +90,6 @@ class EventEyeSpider(scrapy.Spider):
             from_day = (from_date[1]).strip()
 
             to_date = (month_days[1]).split(' ')
-            print 'length : %s' % (len(to_date))
             if len(to_date) == 1:
                 to_day = (to_date[0]).strip()
                 to_month = from_month
@@ -102,6 +104,9 @@ class EventEyeSpider(scrapy.Spider):
 
             from_date = year + '-' + from_month + '-' + from_day + 'T10:00:00'
             to_date = year + '-' + to_month + '-' + to_day + 'T10:00:00'
+
+            print from_date + ' '
+            print to_date + ' '
 
             event_start = datetime.strptime(from_date, "%Y-%m-%dT%H:%M:%S").strftime("%Y-%m-%d %H:%M:%S")
             event_end = datetime.strptime(to_date, "%Y-%m-%dT%H:%M:%S").strftime("%Y-%m-%d %H:%M:%S")
