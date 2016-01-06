@@ -15,8 +15,8 @@ SPIDER_MODULES = ['myscrapper.spiders']
 NEWSPIDER_MODULE = 'myscrapper.spiders'
 
 ITEM_PIPELINES = {
-    'myscrapper.pipelines.SQLandJsonStoragePipeline': 300,
-    # 'myscrapper.pipelines.JsonWriterPipeline': 800,
+    # 'myscrapper.pipelines.SQLandJsonStoragePipeline': 300,
+    'myscrapper.pipelines.JsonWriterPipeline': 800,
     # 'myscrapper.pipelines.JsonStartUrlWriterPipeline': 800,
 }
 
